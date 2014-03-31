@@ -270,11 +270,6 @@ static BOOL AFCertificateHostMatchesDomain(NSString *certificateHost, NSString *
         case AFSSLPinningModeNone:
             return YES;
         case AFSSLPinningModeCertificate: {
-            if (!self.validatesCertificateChain) {
-                shouldTrustServer = [self.pinnedCertificates containsObject:[serverCertificates firstObject]];
-                break;
-            }
-
             NSUInteger trustedCertificateCount = 0;
             for (NSData *trustChainCertificate in serverCertificates) {
                 if ([self.pinnedCertificates containsObject:trustChainCertificate]) {
@@ -288,9 +283,6 @@ static BOOL AFCertificateHostMatchesDomain(NSString *certificateHost, NSString *
         case AFSSLPinningModePublicKey: {
             NSUInteger trustedPublicKeyCount = 0;
             NSArray *publicKeys = AFPublicKeyTrustChainForServerTrust(serverTrust);
-            if (!self.validatesCertificateChain && [publicKeys count] > 0) {
-                publicKeys = @[[publicKeys firstObject]];
-            }
 
             for (id trustChainPublicKey in publicKeys) {
                 for (id pinnedPublicKey in self.pinnedPublicKeys) {

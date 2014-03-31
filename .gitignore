@@ -19,3 +19,6 @@ DerivedData
 Tests/Pods
 Tests/Podfile.lock
 Tests/AFNetworking Tests.xcodeproj/xcshareddata/xcschemes/
+
+# Zed Code Editor
+.zedstate
