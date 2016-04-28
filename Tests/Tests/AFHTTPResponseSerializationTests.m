@@ -1,6 +1,5 @@
 // AFHTTPResponseSerializationTests.m
-//
-// Copyright (c) 2013-2014 AFNetworking (http://afnetworking.com)
+// Copyright (c) 2011–2016 Alamofire Software Foundation (http://alamofire.org/)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -63,6 +62,28 @@
 
         XCTAssertNotNil(error, @"Did not fail handling status code %@",@(statusCode));
     }];
+}
+
+- (void)testResponseIsValidated {
+    NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:[NSURL URLWithString:@"http://test.com"]
+                                                              statusCode:200
+                                                             HTTPVersion:@"1.1"
+                                                            headerFields:@{@"Content-Type":@"text/html"}];
+    NSData *data = [@"text" dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error = nil;
+    XCTAssertTrue([self.responseSerializer validateResponse:response data:data error:&error]);
+}
+
+- (void)testCanBeCopied {
+    AFHTTPResponseSerializer *copiedSerializer = [self.responseSerializer copy];
+    XCTAssertNotNil(copiedSerializer);
+    XCTAssertNotEqual(copiedSerializer, self.responseSerializer);
+    XCTAssertTrue(copiedSerializer.acceptableContentTypes.count == self.responseSerializer.acceptableContentTypes.count);
+    XCTAssertTrue(copiedSerializer.acceptableStatusCodes.count == self.responseSerializer.acceptableStatusCodes.count);
+}
+
+- (void)testSupportsSecureCoding {
+    XCTAssertTrue([AFHTTPResponseSerializer supportsSecureCoding]);
 }
 
 @end
