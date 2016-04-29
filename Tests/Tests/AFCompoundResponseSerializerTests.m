@@ -1,5 +1,5 @@
 // AFURLSessionManagerTests.m
-// Copyright (c) 2011–2016 Alamofire Software Foundation (http://alamofire.org/)
+// Copyright (c) 2011–2016 Alamofire Software Foundation ( http://alamofire.org/ )
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -47,7 +47,7 @@
     AFJSONResponseSerializer *jsonSerializer = [AFJSONResponseSerializer serializer];
     AFCompoundResponseSerializer *compoundSerializer = [AFCompoundResponseSerializer compoundSerializerWithResponseSerializers:@[imageSerializer, jsonSerializer]];
 
-    NSData *data = [NSJSONSerialization dataWithJSONObject:@{@"key":@"value"} options:0 error:nil];
+    NSData *data = [NSJSONSerialization dataWithJSONObject:@{@"key":@"value"} options:(NSJSONWritingOptions)0 error:nil];
     NSURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:[NSURL URLWithString:@"http://test.com"]
                                                           statusCode:200
                                                          HTTPVersion:@"1.1"
