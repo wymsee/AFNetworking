@@ -28,3 +28,4 @@ fastlane/test-output/*
 
 Carthage/Build
 .zedstate
+fastlane/README.md
